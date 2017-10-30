@@ -8,8 +8,8 @@
 {% if app.user %}
     {% include('TweetProxyBundle:Default:nav.html.twig') %}
 {% endif %}
-{% include('TweetProxyBundle:Default:flash.html.twig') %}
 <div class="content">
+    {% include('TweetProxyBundle:Default:flash.html.twig') %}
     {% block body %}{% endblock %}
 </div>
 {% include('TweetProxyBundle:Default:scripts.html.twig') %}

@@ -13,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Following
 {
-
-    public function __construct () {
+    public function __construct()
+    {
         $this->followers = new ArrayCollection();
     }
 
@@ -253,7 +253,8 @@ class Following
     /**
      * @param User $follower
      */
-    public function addFollower($follower) {
+    public function addFollower($follower)
+    {
         if (!$this->followers->contains($follower)) {
             $this->followers->add($follower);
         }
@@ -262,7 +263,8 @@ class Following
     /**
      * @param User $follower
      */
-    public function removeFollower($follower) {
+    public function removeFollower($follower)
+    {
         if ($this->followers->contains($follower)) {
             $this->followers->removeElement($follower);
         }
@@ -272,12 +274,12 @@ class Following
      * @param User $follower
      * @return bool
      */
-    public function hasFollower($follower) {
+    public function hasFollower($follower)
+    {
         if ($this->followers->contains($follower)) {
             return true;
         }
 
         return false;
     }
-
 }

@@ -105,5 +105,4 @@ class LoginFormAuth extends AbstractFormLoginAuthenticator
     {
         return $this->router->generate('main_index_page');
     }
-
 }

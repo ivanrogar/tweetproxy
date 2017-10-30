@@ -29,7 +29,6 @@ class InstallCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $em = $this->getContainer()->get('doctrine')->getManager();
         $manager = $this->getContainer()->get('doctrine.orm.default_entity_manager');
 
@@ -55,5 +54,4 @@ class InstallCommand extends ContainerAwareCommand
 
         return 0;
     }
-
 }

@@ -17,8 +17,8 @@ class TweetsRepository extends EntityRepository
      * @param $screenName
      * @return Tweets[]|null
      */
-    public function getUserTweets ($screenName, $limit = null) {
-
+    public function getUserTweets($screenName, $limit = null)
+    {
         $query = $this->createQueryBuilder('t');
         $query
             ->innerJoin('t.user', 'user')
@@ -26,7 +26,7 @@ class TweetsRepository extends EntityRepository
             ->setParameter('screenName', $screenName)
             ->addOrderBy('t.tweetDate', 'DESC');
 
-        if ( (int) $limit) {
+        if ((int) $limit) {
             $query
                 ->setMaxResults($limit);
         }
@@ -42,8 +42,8 @@ class TweetsRepository extends EntityRepository
      * @param string|null $searchQuery
      * @return QueryBuilder
      */
-    public function searchTweets ($userId, $followingId, $searchQuery) {
-
+    public function searchTweets($userId, $followingId, $searchQuery)
+    {
         $query = $this->createQueryBuilder('t');
 
         $query
@@ -58,7 +58,7 @@ class TweetsRepository extends EntityRepository
                 ->setParameter('searchQuery', $searchQuery);
         }
 
-        if ( (int) ($followingId)) {
+        if ((int) ($followingId)) {
             $query
                 ->andWhere('following.id = :followingId')
                 ->setParameter('followingId', (int) $followingId);
@@ -66,5 +66,4 @@ class TweetsRepository extends EntityRepository
 
         return $query;
     }
-
 }

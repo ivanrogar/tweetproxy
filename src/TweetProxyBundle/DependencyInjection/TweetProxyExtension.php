@@ -28,5 +28,4 @@ class TweetProxyExtension extends Extension
         $container->setParameter('tweetproxy.fetch_count', $config['fetch_count']);
         $container->setParameter('tweetproxy.display_count', $config['display_count']);
     }
-
 }

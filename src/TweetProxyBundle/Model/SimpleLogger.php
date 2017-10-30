@@ -8,10 +8,10 @@ namespace TweetProxyBundle\Model;
  */
 class SimpleLogger
 {
-
     private $logPath;
 
-    public function __construct () {
+    public function __construct()
+    {
         $this->logPath = realpath(dirname(__FILE__) . '/../../../var/') . '/';
     }
 
@@ -19,8 +19,8 @@ class SimpleLogger
      * @param $text
      * @param string $logFile
      */
-    public function writeLn ($text, $logFile = 'tweetProxy') {
-
+    public function writeLn($text, $logFile = 'tweetProxy')
+    {
         if (!trim($logFile)) {
             $logFile = 'tweetProxy';
         }
@@ -28,7 +28,6 @@ class SimpleLogger
         $logFile .= '.log';
 
         try {
-
             $currentDate = new \DateTime('now', new \DateTimeZone('UTC'));
             $fp = fopen($this->logPath . $logFile, "a");
 
@@ -36,9 +35,7 @@ class SimpleLogger
                 fwrite($fp, $currentDate->format('d.m.Y H:i:s') . ' : ' . $text . "\r\n");
                 fclose($fp);
             }
-
+        } catch (\Exception $e) {
         }
-        catch (\Exception $e) {}
     }
-
 }

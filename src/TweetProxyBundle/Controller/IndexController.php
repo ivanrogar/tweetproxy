@@ -23,18 +23,16 @@ class IndexController extends Controller
      */
     public function indexAction($screenName)
     {
-
         $em = $this->get('doctrine')->getManager();
         $meta['title'] = 'Following';
         $tweetProxy = $this->get('tp.tweetProxy');
 
         if (trim($screenName)) {
-
             $following = $tweetProxy->getRecentTweets($screenName);
 
             // user nije nađen, nema podataka
             if (!$following) {
-                $this->addFlash('danger', 'Twitter user was not found.');
+                $this->addFlash('danger', 'Twitter user was not found. Are your API keys added to config?');
                 return new RedirectResponse($this->generateUrl('main_index_page'));
             }
 
@@ -42,12 +40,10 @@ class IndexController extends Controller
 
             $meta['title'] .= ' - ' . $following->getUsername();
             return $this->render('TweetProxyBundle:Default/user:view.html.twig', ['tweets' => $tweets, 'following' => $following, 'meta' => $meta]);
-        }
-        else {
+        } else {
             $following = $tweetProxy->getUser()->getFollowing();
             return $this->render('TweetProxyBundle:Default:index.html.twig', ['following' => $following, 'meta' => $meta]);
         }
-
     }
 
     /**
@@ -55,18 +51,16 @@ class IndexController extends Controller
      * @Route("/unfollow/{followingId}")
      * @return RedirectResponse
      */
-    public function unfollowAction($followingId) {
-
+    public function unfollowAction($followingId)
+    {
         $em = $this->get('doctrine')->getManager();
         $tweetProxy = $this->get('tp.tweetProxy');
-        $following = $em->getRepository('TweetProxyBundle:Following')->find( (int) $followingId);
+        $following = $em->getRepository('TweetProxyBundle:Following')->find((int) $followingId);
 
         if (!$following) {
             $this->addFlash('warning', 'Twitter user not found.');
-        }
-        else {
+        } else {
             if ($tweetProxy->isUserFollowing($following)) {
-
                 $user = $tweetProxy->getUser();
                 $user->removeFollowing($following);
                 $following->removeFollower($user);
@@ -76,13 +70,11 @@ class IndexController extends Controller
                 $em->flush();
 
                 $this->addFlash('success', 'Twitter user unfollowed.');
-            }
-            else {
+            } else {
                 $this->addFlash('warning', "You're not following this user!");
             }
         }
 
         return new RedirectResponse($this->generateUrl('main_index_page'));
     }
-
 }

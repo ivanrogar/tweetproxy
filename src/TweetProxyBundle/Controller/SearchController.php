@@ -33,8 +33,8 @@ class SearchController extends Controller
      * @Route("/search/do", name="search_page_do")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function doSearchAction(Request $request) {
-
+    public function doSearchAction(Request $request)
+    {
         $followingId = trim($request->get('following'));
         $userId = $this->get('tp.tweetProxy')->getUser()->getId();
         $searchQuery = trim($request->get('searchQuery'));
@@ -51,5 +51,4 @@ class SearchController extends Controller
 
         return $this->render('TweetProxyBundle:Default/search:list.html.twig', ['pagination' => $pagination]);
     }
-
 }

@@ -22,5 +22,4 @@ class LoginForm extends AbstractType
             ->add('_username')
             ->add('_password', PasswordType::class);
     }
-
 }

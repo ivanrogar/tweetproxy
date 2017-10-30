@@ -152,5 +152,4 @@ class Tweets
         $this->tweetSource = $tweetSource;
         return $this;
     }
-
 }

@@ -17,7 +17,6 @@ use TweetProxyBundle\Entity\User;
  */
 class TweetProxy
 {
-
     private $client;
     private $container;
     private $em;
@@ -26,8 +25,8 @@ class TweetProxy
     /**
      * @param ContainerInterface $containerInterface
      */
-    public function __construct (ContainerInterface $containerInterface) {
-
+    public function __construct(ContainerInterface $containerInterface)
+    {
         $stack = HandlerStack::create();
 
         $middleware = new Oauth1([
@@ -53,16 +52,14 @@ class TweetProxy
      * @param string $screenName
      * @return Following|null
      */
-    public function getRecentTweets ($screenName) {
-
+    public function getRecentTweets($screenName)
+    {
         try {
-
             $result = $this->client->get('statuses/user_timeline.json?screen_name=' . $screenName . '&tweet_mode=extended&count=' . (int) $this->container->getParameter('tweetproxy.fetch_count'));
 
             $tweetsArray = json_decode($result->getBody()->getContents(), true);
 
             if (count($tweetsArray)) {
-
                 $userImage = str_replace('_normal', '_400x400', $tweetsArray[0]['user']['profile_image_url']);
                 $banner = $tweetsArray[0]['user']['profile_banner_url'];
 
@@ -88,7 +85,6 @@ class TweetProxy
                 }
                 // update usera?
                 else {
-
                     if ($following->getUserImage() !== $userImage) {
                         $following->setUserImage($userImage);
                     }
@@ -101,7 +97,6 @@ class TweetProxy
                     if ($following->getUserLocation() !== $tweetsArray[0]['user']['location']) {
                         $following->setUserLocation($tweetsArray[0]['user']['location']);
                     }
-
                 }
 
                 // update logiranog usera
@@ -141,9 +136,7 @@ class TweetProxy
                 $this->em->flush();
                 return $following;
             }
-
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->simpleLogger->writeLn($e->getMessage(), 'tweetProxy_exception');
         }
 
@@ -154,8 +147,8 @@ class TweetProxy
      * @param Following $following
      * @return bool
      */
-    public function isUserFollowing ($following) {
-
+    public function isUserFollowing($following)
+    {
         $user = $this->getUser();
 
         if ($user->hasFollowing($following)) {
@@ -168,7 +161,8 @@ class TweetProxy
     /**
      * @return User
      */
-    public function getUser () {
+    public function getUser()
+    {
         return $this->container->get('security.token_storage')->getToken()->getUser();
     }
 
@@ -176,8 +170,8 @@ class TweetProxy
      * @param string $banner
      * @return bool
      */
-    private function checkIfBannerAvailable ($banner) {
-
+    private function checkIfBannerAvailable($banner)
+    {
         $request = new Request('GET', $banner);
         $client = new Client();
 
@@ -186,8 +180,8 @@ class TweetProxy
             if ($response->getStatusCode() == 200) {
                 return true;
             }
+        } catch (\Exception $e) {
         }
-        catch (\Exception $e) {}
 
         return false;
     }
@@ -195,7 +189,8 @@ class TweetProxy
     /**
      * @param array $tweet
      */
-    private function convertLinks (array &$tweet) {
+    private function convertLinks(array &$tweet)
+    {
         if (isset($tweet['entities']) && isset($tweet['entities']['urls'])) {
             foreach ($tweet['entities']['urls'] as $url) {
                 $tweet['full_text'] = str_replace($url['url'], "<a href='{$url['url']}' target='_blank'>{$url['url']}</a>", $tweet['full_text']);
@@ -206,7 +201,8 @@ class TweetProxy
     /**
      * @param $text
      */
-    private function convertTags (&$text) {
+    private function convertTags(&$text)
+    {
         $regex = '~(@\w+)~';
         if (preg_match_all($regex, $text, $matches, PREG_PATTERN_ORDER)) {
             foreach ($matches[1] as $word) {
@@ -215,5 +211,4 @@ class TweetProxy
             }
         }
     }
-
 }

@@ -12,8 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-
-    public function __construct () {
+    public function __construct()
+    {
         $this->following = new ArrayCollection();
     }
 
@@ -67,7 +67,8 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->email;
     }
 
@@ -156,7 +157,6 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-
     }
 
     public function eraseCredentials()
@@ -233,7 +233,8 @@ class User implements UserInterface
     /**
      * @param Following $following
      */
-    public function addFollowing($following) {
+    public function addFollowing($following)
+    {
         if (!$this->following->contains($following)) {
             $this->following->add($following);
         }
@@ -242,7 +243,8 @@ class User implements UserInterface
     /**
      * @param Following $following
      */
-    public function removeFollowing($following) {
+    public function removeFollowing($following)
+    {
         if ($this->following->contains($following)) {
             $this->following->removeElement($following);
         }
@@ -252,7 +254,8 @@ class User implements UserInterface
      * @param Following $following
      * @return bool
      */
-    public function hasFollowing($following) {
+    public function hasFollowing($following)
+    {
         if ($this->following->contains($following)) {
             return true;
         }
@@ -277,5 +280,4 @@ class User implements UserInterface
         $this->isActivated = $isActivated;
         return $this;
     }
-
 }
