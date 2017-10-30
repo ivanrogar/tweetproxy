@@ -1,0 +1,22 @@
+{% extends 'TweetProxyBundle:Default:base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="count">
+            <legend> {{ pagination.getTotalItemCount }} result(s)</legend>
+        </div>
+        {% set showUser = true %}
+        {% if pagination|length %}
+            {% for tweet in pagination %}
+                {% include('TweetProxyBundle:Default/tweet:view.html.twig') %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    </div>
+{% endblock %}

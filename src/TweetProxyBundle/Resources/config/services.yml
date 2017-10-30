@@ -1,0 +1,15 @@
+services:
+    tp.loginFormAuthenticator:
+            class: TweetProxyBundle\Security\LoginFormAuth
+            autowire: true
+
+    tp.hashPasswordListener:
+        class: TweetProxyBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    tp.tweetProxy:
+        class: TweetProxyBundle\Model\TweetProxy
+        autowire: true
+        lazy: true

@@ -1,0 +1,31 @@
+{% extends 'TweetProxyBundle:Default:base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <form method="post" action="{{ path('search_page_do') }}">
+        <div class="form-group">
+            <label for="following">Select user</label>
+            <select class="form-control" id="following" name="following">
+                <option value="">-</option>
+                {% if following is defined and following is not empty %}
+                    {% for user in following %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="searchQuery">Search text in tweets</label>
+            <input class="form-control" id="searchQuery" name="searchQuery"/>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-success btn-lg"> <i class="fa fa-search"></i>&nbsp; Search </button>
+        </div>
+        </form>
+    </div>
+
+{% endblock %}

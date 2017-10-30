@@ -1,0 +1,33 @@
+.user-image {
+    float: right;
+    padding-top: 30px;
+}
+
+.tweet-row {
+    padding: 10px;
+}
+
+.tweet-div {
+    border: 1px solid #eee;
+}
+
+@media only screen and (max-width: 960px) {
+    .user-image {
+        float: none;
+    }
+}
+
+.cover-img-container {
+    height: 400px;
+}
+
+.cover-img {
+    max-height: 100%;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+
+.content {
+    padding-top: 100px;
+}

@@ -1,0 +1,46 @@
+{% extends 'TweetProxyBundle:Default:base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        {% if following is defined and following %}
+
+            {% if following.userBanner %}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 hidden-xs hidden-sm">
+                        <div class="cover-img-container">
+                            <img class="cover-img" src="{{ following.userBanner }}"/>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <img class="img-responsive user-image" src="{{ following.userImage }}"/>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <h2>
+                        {{ following.userName }}
+                    </h2>
+                    <h4>@{{ following.screenName }}</h4>
+                    <h5>{{ following.userInfo }}</h5>
+                    {% if following.userLocation %}
+                        <h6><i class="fa fa-globe"></i> {{ following.userLocation }} </h6>
+                    {% endif %}
+
+                    {% if tweets is defined and tweets is not empty %}
+                        {% for tweet in tweets %}
+                            {% include('TweetProxyBundle:Default/tweet:view.html.twig') %}
+                        {% endfor %}
+                    {% endif %}
+
+                </div>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}

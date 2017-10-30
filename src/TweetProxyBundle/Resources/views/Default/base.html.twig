@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    {% include('TweetProxyBundle:Default:meta.html.twig') %}
+    {% include('TweetProxyBundle:Default:stylesheets.html.twig') %}
+</head>
+<body>
+{% if app.user %}
+    {% include('TweetProxyBundle:Default:nav.html.twig') %}
+{% endif %}
+{% include('TweetProxyBundle:Default:flash.html.twig') %}
+<div class="content">
+    {% block body %}{% endblock %}
+</div>
+{% include('TweetProxyBundle:Default:scripts.html.twig') %}
+</body>
+</html>

@@ -1,0 +1,38 @@
+<div class="row tweet-row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tweet-div">
+        {% if showUser is defined and showUser %}
+            <h4><a href="{{ path('main_index_page', {screenName: tweet.user.screenName}) }}">@{{ tweet.user.screenName }}</a></h4>
+            <hr>
+        {% endif %}
+        <h6>
+            <i class="fa fa-clock-o"></i>&nbsp; {{ tweet.tweetDate|date('d.m.Y H:i:s') }}
+        </h6>
+        <h4>
+            {{ tweet.tweetText|raw }}
+        </h4>
+        {% set tweetSrc = tweet.tweetSource %}
+        {% if tweetSrc.extended_entities.media is defined and tweetSrc.extended_entities.media|length %}
+            {% for media in tweetSrc.extended_entities.media %}
+                {% if media.type == 'video' %}
+                    <video width="100%" poster="{{ media.media_url }}" controls>
+                        <source src="{{ media.video_info.variants[0].url }}" type="{{ media.video_info.variants[0].content_type }}">
+                    </video>
+                {% elseif media.type == 'photo' %}
+                    <br/>
+                    <img class="img-responsive" src="{{ media.media_url }}"/>
+                {% endif %}
+            {% endfor %}
+        {% elseif tweetSrc.entities.media is defined and tweetSrc.entities.media|length %}
+            {% for media in tweetSrc.entities.media %}
+                {% if media.type == 'video' %}
+                    <video controls>
+                        <source src="{{ media.video_info.variants[0].url }}" type="{{ media.video_info.variants[0].content_type }}">
+                    </video>
+                {% elseif media.type == 'photo' %}
+                    <br/>
+                    <img class="img-responsive" src="{{ media.media_url }}"/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

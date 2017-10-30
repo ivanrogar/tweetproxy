@@ -1,0 +1,38 @@
+{% extends 'TweetProxyBundle:Default:base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+    {% if following is defined and following is not empty %}
+        {% for user in following %}
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <a href="{{ path('main_index_page', {screenName: user.screenName}) }}">
+                        <img class="img-responsive user-image" src="{{ user.userImage }}"/>
+                    </a>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <h2>
+                        <a href="{{ path('main_index_page', {screenName: user.screenName}) }}">{{ user.username }}</a>
+                    </h2>
+                    <h4>@{{ user.screenName }}</h4>
+                    <h6>
+                        {{ user.userInfo }}
+                        {% if user.tweets %}
+                            <br/>
+                            <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>&nbsp; {{ user.tweets|length }}
+                        {% endif %}
+                    </h6>
+                    <a class="btn btn-danger" href="{{ path('tweetproxy_index_unfollow', {followingId: user.id}) }}"><i class="fa fa-undo" aria-hidden="true"></i>&nbsp; Unfollow</a>
+                    <hr>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2>You're not following anyone yet.</h2>
+    {% endif %}
+
+    </div>
+
+{% endblock %}

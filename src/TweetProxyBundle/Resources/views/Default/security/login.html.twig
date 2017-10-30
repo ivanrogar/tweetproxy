@@ -1,0 +1,33 @@
+{% extends 'TweetProxyBundle:Default:base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <legend>TweetProxy</legend>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h5 class="text-center">Please Sign in</h5>
+            <br/>
+
+            {% if error is defined and error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey }}
+                </div>
+            {% endif %}
+
+            {{ form_start(form) }}
+                {{ form_row(form._username) }}
+                {{ form_row(form._password) }}
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <button type="submit" class="btn btn-success btn-lg">Sign in <span class="fa fa-sign-in"></span></button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
